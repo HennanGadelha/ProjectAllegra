@@ -3,7 +3,6 @@ require('core/Database.php');
 
 class Users {
 
-   
     private $connection;
 
 
@@ -13,68 +12,10 @@ class Users {
         $this->connection = (new Database())->connect();
     }
  
-    public function getCodUserr(){
-        return $this->codUser;
-    }
-
-    public function setCodUser($codUser){
-        $this->codUser =  $codUser ;
-    }
-    
-
-    public function getName(){
-        return $this->name;
-    }
-
-    public function setName($name){
-        $this->name =  $name;
-    }
-
-    public function getAddress(){
-        return $this->address;
-    }
-
-    public function setAddress($address){
-        $this->address =  $address;
-    }
-
-    public function  getPhone(){
-        return $this->phone;
-    }
-
-    public function setPhone($phone){
-        $this->phone =  $phone ;
-    }
-
-    public function getEmail(){
-        return $this->email;
-    }
-
-    public function setEmail($email){
-        $this->email =  $email;
-    }
-
-    public function getSex(){
-        return $this->sex;
-    }
-
-    public function setSex($sex){
-        $this->sex =  $sex;
-    }
-
-    public function getPassword(){
-        return $this->password;
-    }
-
-    public function setPassword($password){
-        $this->password =  $password;
-    }
-
-
     public function insert($data){
         $sql = 'INSERT INTO users ';
-        $sql .= '(name,  cpf, address, phone, email,  password, sex) ';
-        $sql .= 'VALUES (:name,  :cpf, :address, :phone, :email,  :password, :sex) ';
+        $sql .= '(name,  cpf, address, phone, email,  password, genre ) ';
+        $sql .= 'VALUES (:name,  :cpf, :address, :phone, :email,  :password, :genre) ';
 
         $user = $this->connection->prepare($sql);
 
@@ -84,7 +25,7 @@ class Users {
         $user->BindValue(':phone', $data['phone'],PDO::PARAM_STR);
         $user->BindValue(':email', $data['email'],PDO::PARAM_STR);
         $user->BindValue(':password', $data['password'],PDO::PARAM_STR);
-        $user->BindValue(':sex', $data['sex'],PDO::PARAM_STR);
+        $user->BindValue(':genre ', $data['genre '],PDO::PARAM_STR);
   
 
         $user->execute();
@@ -93,16 +34,57 @@ class Users {
     }
 
 
-    public function findAll () {
+    public function update($data)  {
+
+        $sql = 'update users';
+        $sql .= 'set name=:name, cpf=:cpf, address=:address, phone=:phone, email=:email, ';
+        $sql .= 'password=:password, genre =:genre  where cod = :cod';
+
+        $user = $this->connection->prepare($sql);
+
+        $user->bindValue(':cod', $data['cod'], PDO :: PARAM_INT);
+        $user->BindValue(':name', $data['name'],PDO::PARAM_STR);
+        $user->BindValue(':cpf', $data['cpf'],PDO::PARAM_STR);
+        $user->BindValue(':address', $data['address'],PDO::PARAM_STR);
+        $user->BindValue(':phone', $data['phone'],PDO::PARAM_STR);
+        $user->BindValue(':email', $data['email'],PDO::PARAM_STR);
+        $user->BindValue(':password', $data['password'],PDO::PARAM_STR);
+        $user->BindValue(':genre ', $data['genre '],PDO::PARAM_STR);  
+
+        return $user->execute();
+
+    }
+
+    public function delete($data) {
+
+        $sql = 'delete * from users where codUsers = :codUsers';
+
+        $user = $this->connection->prepare($sql);
+        $user->bindValue(':codUser', $codUser, PDO :: PARAM_INT);
+
+        return $user->execute();
+
+    }
+
+    public function findAll() {
 
         $sql= 'select * from users';
         $user= $this->connection->prepare($sql);
         $user->execute();
         return $user->fetchAll(PDO::FETCH_OBJ);
     }
-
     
+    public function findOne() {
 
+        $sql = 'select * from users ';
+        $sql .= 'where cod = :cod';
+
+        $user = $this->connection->prepare($sql);
+        $user->bindValue(':cod', $cod, PDO :: PARAM_INT);
+        $user->execute();
+
+        return $user->fetch(PDO :: PARAM_OBJ);
+    }
 
 
 
