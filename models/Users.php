@@ -25,7 +25,7 @@ class Users {
         $user->BindValue(':phone', $data['phone'],PDO::PARAM_STR);
         $user->BindValue(':email', $data['email'],PDO::PARAM_STR);
         $user->BindValue(':password', $data['password'],PDO::PARAM_STR);
-        $user->BindValue(':genre ', $data['genre '],PDO::PARAM_STR);
+        $user->BindValue(':genre', $data['genre'],PDO::PARAM_STR);
   
 
         $user->execute();
@@ -36,9 +36,9 @@ class Users {
 
     public function update($data)  {
 
-        $sql = 'update users';
-        $sql .= 'set name=:name, cpf=:cpf, address=:address, phone=:phone, email=:email, ';
-        $sql .= 'password=:password, genre =:genre  where cod = :cod';
+        $sql = 'UPDATE users ';
+        $sql .= 'SET name=:name, cpf=:cpf, address=:address, phone=:phone, email=:email, ';
+        $sql .= 'password=:password, genre =:genre  WHERE cod = :cod';
 
         $user = $this->connection->prepare($sql);
 
@@ -55,12 +55,12 @@ class Users {
 
     }
 
-    public function delete($data) {
+    public function delete($cod) {
 
-        $sql = 'delete * from users where codUsers = :codUsers';
+        $sql = 'DELETE * from users where cod = :cod';
 
         $user = $this->connection->prepare($sql);
-        $user->bindValue(':codUser', $codUser, PDO :: PARAM_INT);
+        $user->bindValue(':cod', $cod, PDO :: PARAM_INT);
 
         return $user->execute();
 
@@ -68,16 +68,16 @@ class Users {
 
     public function findAll() {
 
-        $sql= 'select * from users';
+        $sql= 'SELECT * FROM users';
         $user= $this->connection->prepare($sql);
         $user->execute();
         return $user->fetchAll(PDO::FETCH_OBJ);
     }
     
-    public function findOne() {
+    public function findOne($cod) {
 
-        $sql = 'select * from users ';
-        $sql .= 'where cod = :cod';
+        $sql = 'SELECT * FROM users ';
+        $sql .= 'WHERE cod = :cod';
 
         $user = $this->connection->prepare($sql);
         $user->bindValue(':cod', $cod, PDO :: PARAM_INT);

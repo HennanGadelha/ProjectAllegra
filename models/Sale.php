@@ -8,7 +8,6 @@ class Sale{
     private $connection;
     
 
-    
 
     public function __construct(){
         
@@ -18,7 +17,7 @@ class Sale{
     }
 
 
-    public function insert($value) {
+    public function insert($data) {
 
         $sql = 'INSERT INTO sale ';
         $sql .= '(value, date) ';
@@ -26,8 +25,8 @@ class Sale{
 
         $sale = $this->connection->prepare($sql);
 
-        $sale->bindValue(':value', $value, PDO::PARAM_INT);
-        $sale->bindValue('now', $data['value'], PDO::PARAM_INT);
+        $sale->bindValue(':value', $data['value'], PDO::PARAM_INT);
+        //$sale->bindValue('now()', $data['value'], PDO::PARAM_INT);
          
          
         $sale->execute();
