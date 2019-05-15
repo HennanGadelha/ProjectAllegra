@@ -1,16 +1,18 @@
 <?php
 require('core/Database.php');
+require('models/Category.php');
 
 
  class Products{
  
     private $connection;
-    //private $category = new Category();
+    private $category;
 
 
     public function __construct(){
 
         $this->connection = (new Database())->connect();
+        $this->category = new Category();
 
     }
 
@@ -94,8 +96,8 @@ require('core/Database.php');
 
         $product = $this->connection->prepare($sql);
 
-        $product->bindValue(':minPrice', $minPrice, PDO :: PARAM_STR);
-        $product->bindValue(':maxPrice', $maxPrice, PDO :: PARAM_STR);
+        $product->bindValue(':minPrice', $minPrice, PDO :: PARAM_INT);
+        $product->bindValue(':maxPrice', $maxPrice, PDO :: PARAM_INT);
        
         $product->execute();
         return  $product->fetchAll(PDO::FETCH_OBJ);
