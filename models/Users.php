@@ -49,7 +49,7 @@ class Users {
         $user->BindValue(':phone', $data['phone'],PDO::PARAM_STR);
         $user->BindValue(':email', $data['email'],PDO::PARAM_STR);
         $user->BindValue(':password', $data['password'],PDO::PARAM_STR);
-        $user->BindValue(':genre ', $data['genre '],PDO::PARAM_STR);  
+        $user->BindValue(':genre', $data['genre'],PDO::PARAM_STR);  
 
         return $user->execute();
 
@@ -57,11 +57,9 @@ class Users {
 
     public function delete($cod) {
 
-        $sql = 'DELETE * from users where cod = :cod';
-
+        $sql = 'DELETE from users where cod = :cod';
         $user = $this->connection->prepare($sql);
-        $user->bindValue(':cod', $cod, PDO :: PARAM_INT);
-
+        $user->bindValue(':cod',$cod,PDO::PARAM_INT);
         return $user->execute();
 
     }

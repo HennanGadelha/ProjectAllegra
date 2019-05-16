@@ -52,6 +52,8 @@ add  FOREIGN key (salaUser)
 REFERENCES users(codUsers)
 
 
+
+
 alter table saleproducts
 add FOREIGN key (productsSale)
 REFERENCES products(cod)

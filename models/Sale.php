@@ -1,5 +1,5 @@
 <?php
-require('core/Database.php');
+
 require('models/Users.php');
 
 class Sale{
@@ -29,7 +29,7 @@ class Sale{
 
         $sale = $this->connection->prepare($sql);
 
-        $sale->bindValue(':value', $data['value'], PDO::PARAM_INT);
+        $sale->bindValue(':value', $data['value'], PDO::PARAM_STR);
         
         $sale->execute();
 

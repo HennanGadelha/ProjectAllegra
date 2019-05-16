@@ -1,17 +1,16 @@
 <?php
 
-
-require('models/Products.php');
+require('models/Users.php');
 
 
 if(isset($_POST['action']) && $_POST['action'] == 'insert') {
     
-    $product = new Products();
-    echo json_encode($product->insert($_POST));
+    $sale = new Sale();
+    echo json_encode($sale->insert($_POST));
     return;
 }
 
-/*if(!isset($_GET['action'])) {
+if(!isset($_GET['action'])) {
    
     $user = new Users();
     echo json_encode($user->findAll());
@@ -21,20 +20,29 @@ if(isset($_POST['action']) && $_POST['action'] == 'insert') {
 
 if(isset($_POST['action']) && $_POST['action'] == 'update') {
 
-    $user = new Users();
+    $product = new Products();
 
-    if($user->update($_POST)){
+    if($product->update($_POST)){
 
         echo 'updated';
     }
     return;
 }
 
-if(isset($_GET['action']) && $_GET['action'] == 'show' && isset($_GET['codUsers'])) {
+if(isset($_GET['action']) && $_GET['action'] == 'show' && isset($_GET['cod'])) {
     $user = new Users();
-    echo json_encode($user->findOne($_GET['codUsers']));
-  }*/
+    echo json_encode($user->findOne($_GET['cod']));
+  }
 
+  if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cod'])) {
+   
+    $user = new Users();
+    if($user->delete($_GET['cod'])) {
+      echo 'Deleted!';
+    }
+    
+    return;
+  }
 
-
+//http://localhost/Allegra/index.php?action=delete&cod=1
  

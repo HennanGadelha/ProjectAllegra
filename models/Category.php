@@ -28,16 +28,16 @@ class Category {
         return $this->connection->lastInsertId();
    }
 
-   public function update($cod) {
+   public function update($data) {
 
         $sql = 'UPDATE  category SET ';
-        $sql .= '(name) VALUES (name) ';
+        $sql .= 'name=:name ';
         $sql .= 'WHERE cod = :cod';
 
         $category = $this->connection->prepare($sql);
 
-        $category->bindValue(':cod', $cod, PDO::PARAM_INT);
-        $category->bindValue(':cod', $cod, PDO::PARAM_STR);
+        $category->bindValue(':cod', $data['cod'], PDO::PARAM_INT);
+        $category->bindValue(':name', $data['name'], PDO::PARAM_STR);
 
         return $category->execute();
 
@@ -46,10 +46,8 @@ class Category {
    public function delete($cod){
 
         $sql = 'DELETE * FROM category where cod = :cod';
-
         $category = $this->connection->prepare($sql);
         $category->bindValue(':cod', $cod, PDO::PARAM_INT);
-
         return $category->execute();
    }
 
