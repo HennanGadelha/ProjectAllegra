@@ -8,7 +8,7 @@ class Sale{
     private $date;
     private $connection;
     private $user;
-    private $products;
+    private $products= [];
 
    
     public function __construct(){
@@ -37,5 +37,19 @@ class Sale{
 
     } 
 
+    public function report() {
+
+        $sql = 'select * from sale ';
+        $sql .= 'inner join users ';
+        $sql .= 'on sale.cod=users.cod ';
+        
+        $sale = $this->connection->prepare($sql);
+
+        $sale->execute();
+
+        return $sale->fetchAll(PDO::FETCH_OBJ);
+
+
+    }
 
 }
