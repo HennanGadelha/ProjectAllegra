@@ -50,23 +50,25 @@ class Category {
         $category->bindValue(':cod', $cod, PDO::PARAM_INT);
         return $category->execute();
    }
+   public function findAll(){
+        $sql = 'Select * from category';
+        $category=$this->connection->prepare($sql);
+        $category->execute();
+        return $category->fetchAll(PDO::FETCH_OBJ);
 
-   public function findOne($name) {
+   }
 
-        $sql = 'SELECT * FROM category WHERE name=:name ';
+   public function findOne($cod) {
+
+        $sql = 'SELECT * FROM category WHERE cod=:cod ';
 
         $category = $this->connection->prepare($sql);
 
-        $category->bindValue(':name',$name, PDO::PARAM_STR);
+        $category->bindValue(':cod',$cod, PDO::PARAM_INT);
 
         $category->execute();
 
-        return fetch(PDO::PARAM_OBJ);
-
-
-    
-
-
+        return $category->fetch(PDO::FETCH_OBJ);
    }
 
 

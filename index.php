@@ -6,15 +6,15 @@ header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE');
 header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
-require('models/Users.php');
+//require('models/Users.php');
 require('models/Category.php');
-require('models/Products.php');
-require('models/Sale.php');
+//require('models/Products.php');
+//require('models/Sale.php');
 
 
-if(isset($_POST['action']) && $_POST['action'] == 'insert') {
+/*if(isset($_POST['action']) && $_POST['action'] == 'insert') {
     
-    $user = new Users();
+    $user = new Category();
     echo json_encode($user->insert($_POST));
     return;
 }//insert users
@@ -85,16 +85,16 @@ if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cod']))
 if(!isset($_GET['action'])) {
    
   $category = new Category();
-  echo json_encode($user->findAll());
+  echo json_encode($category->findAll());
   
 }// findAll category
 
 if(isset($_GET['action']) && $_GET['action'] == 'show' && isset($_GET['cod'])) {
   $category = new Category();
-  echo json_encode($user->findOne($_GET['cod']));
+  echo json_encode($category->findOne($_GET['cod']));
 }// findOne category
 
-
+/*
 if(isset($_POST['action']) && $_POST['action'] == 'insert') {
     
   $products = new Products();
@@ -123,12 +123,13 @@ if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cod']))
   return;
 }// delete products
 
-if(!isset($_GET['action'])) {
+*/if(!isset($_GET['action'])) {
    
-  $product = new Products();
+  $product = new Category();
   echo json_encode($product->findAll());
   
 }//findAll products
+/*
 
 if(isset($_GET['action']) && $_GET['action'] == 'show' && isset($_GET['cod'])) {
   $product = new Product();
@@ -150,6 +151,6 @@ if(!isset($_GET['action'])) {
 
 }// relatorio de vendas, falta implementar.
  
-
+*/
 //http://localhost/Allegra/index.php?action=delete&cod=1
  
