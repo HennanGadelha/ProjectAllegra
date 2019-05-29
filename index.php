@@ -7,8 +7,8 @@ header('Access-Control-Max-Age: 1000');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
 //require('models/Users.php');
-require('models/Category.php');
-//require('models/Products.php');
+//require('models/Category.php');
+require('models/Products.php');
 //require('models/Sale.php');
 
 
@@ -94,14 +94,32 @@ if(isset($_GET['action']) && $_GET['action'] == 'show' && isset($_GET['cod'])) {
   echo json_encode($category->findOne($_GET['cod']));
 }// findOne category
 
-/*
+*/
 if(isset($_POST['action']) && $_POST['action'] == 'insert') {
     
   $products = new Products();
   echo json_encode($products->insert($_POST));
   return;
+
 }// insert products
 
+
+if(isset($_POST['action']) && $_POST['action'] == 'upload'){
+  
+  
+  echo json_encode(['success' => 'ok']);
+  move_uploaded_file($_FILES['arq']['tmp_name'], 'uploads/' . $_FILES['arq']['name']);
+  
+
+  //$_FILES;
+  //$products = new Products();
+  //echo json_encode($products->upload());
+ 
+  //move_uploaded_file($_FILES['arq']['cod'],'upload/'.$_FILES['arq']['cod'] )
+}
+
+
+/*
 if(isset($_POST['action']) && $_POST['action'] == 'update') {
 
     $product = new Products();
@@ -123,7 +141,7 @@ if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['cod']))
   return;
 }// delete products
 
-*/if(!isset($_GET['action'])) {
+if(!isset($_GET['action'])) {
    
   $product = new Category();
   echo json_encode($product->findAll());

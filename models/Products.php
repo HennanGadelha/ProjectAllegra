@@ -12,24 +12,45 @@ require('core/Database.php');
     public function __construct(){
 
         $this->connection = (new Database())->connect();
-        $this->category = new Category();
+     
 }
     public function insert($data){
 
+
+        
         $sql = 'INSERT INTO  products ';
-        $sql .= '(name, price, genre, description, productsCategory) ';
-        $sql .= ' VALUES (:name, :price, :genre, :description, :productsCategory)';
+        $sql .= '(name,  quantity, price, genre, description, productCategory) ';
+        $sql .= ' VALUES (:name, :quantity, :price, :genre, :description, :productCategory)';
         $product = $this->connection->prepare($sql);
         $product->bindValue(':name', $data['name'], PDO::PARAM_STR);
         $product->bindValue(':price', $data['price'], PDO::PARAM_STR);
+        //$product->bindValue(':photo', $data['photo'], PDO::PARAM_STR);
+        $product->bindValue(':quantity', $data['quantity'], PDO::PARAM_INT);
         $product->bindValue(':genre', $data['genre'], PDO::PARAM_STR);
         $product->bindValue(':description', $data['description'], PDO::PARAM_STR);
-        $product->bindValue(':productsCategory', $data['productsCategory'], PDO::PARAM_INT);
+        $product->bindValue(':productCategory', $data['productCategory'], PDO::PARAM_INT);
 
         $product->execute();
         return $this->connection->lastInsertId();
 
     }
+
+    public function upload(){
+
+        return "ok";
+
+        $sql = 'UPDATE products SET ';
+        $sql .= 'photo=:photo';
+        $sql .= ' where cod = :cod';
+        $product = $this->connection->prepare($sql);
+        $product->bindValue(':cod', $data['cod'],PDO::PARAM_INT);
+        $product->bindValue(':photo', $data['photo'],PDO::PARAM_STR);
+        return $product->execute();
+
+    }
+
+
+
     public function update($data) {
 
         $sql = 'UPDATE products SET ';
