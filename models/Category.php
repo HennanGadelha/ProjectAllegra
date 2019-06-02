@@ -38,14 +38,13 @@ class Category {
 
         $category->bindValue(':cod', $data['cod'], PDO::PARAM_INT);
         $category->bindValue(':name', $data['name'], PDO::PARAM_STR);
-
         return $category->execute();
 
    }
 
    public function delete($cod){
 
-        $sql = 'DELETE * FROM category where cod = :cod';
+        $sql = 'DELETE FROM category where cod = :cod';
         $category = $this->connection->prepare($sql);
         $category->bindValue(':cod', $cod, PDO::PARAM_INT);
         return $category->execute();

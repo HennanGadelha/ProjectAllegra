@@ -24,9 +24,10 @@ class Users {
         $user->BindValue(':address', $data['address'],PDO::PARAM_STR);
         $user->BindValue(':phone', $data['phone'],PDO::PARAM_STR);
         $user->BindValue(':email', $data['email'],PDO::PARAM_STR);
-        $user->BindValue(':password', $data['password'],PDO::PARAM_STR);
+        $user->BindValue(':password', password_hash($data['password'], PASSWORD_DEFAULT),PDO::PARAM_STR);
         $user->BindValue(':genre', $data['genre'],PDO::PARAM_STR);
   
+      
 
         $user->execute();
         return $this->connection->lastInsertId();
@@ -50,7 +51,6 @@ class Users {
         $user->BindValue(':email', $data['email'],PDO::PARAM_STR);
         $user->BindValue(':password', $data['password'],PDO::PARAM_STR);
         $user->BindValue(':genre', $data['genre'],PDO::PARAM_STR);  
-
         return $user->execute();
 
     }
@@ -76,14 +76,28 @@ class Users {
 
         $sql = 'SELECT * FROM users ';
         $sql .= 'WHERE cod = :cod';
-
         $user = $this->connection->prepare($sql);
-        $user->bindValue(':cod', $cod, PDO :: PARAM_INT);
+        $user->bindValue(':cod', $cod,PDO::PARAM_INT);
         $user->execute();
+        return $user->fetch(PDO::FETCH_OBJ);
+     }
 
-        return $user->fetch(PDO :: PARAM_OBJ);
-    }
+    public function login($data){
+        $sql = "SELECT cod From users where email = :email AND password = :password ";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->BindValue(":email", $data['email'],PDO::PARAM_STR);
+        $stmt->BindValue(":password", $data['password'],PDO::PARAM_STR);
+        $stmt->execute();
+        if($stmt->rowCount() > 0){
+
+            $dado = $stmt->fetch();
+            
+            return true;
+        }else{
+            return false;
+        }
 
 
 
+}
 }

@@ -19,18 +19,20 @@ require('core/Database.php');
 
         
         $sql = 'INSERT INTO  products ';
-        $sql .= '(name,  quantity, price, genre, description, productCategory) ';
-        $sql .= ' VALUES (:name, :quantity, :price, :genre, :description, :productCategory)';
+        $sql .= '(name, photo,  quantity, price, genre, description, productCategory) ';
+        $sql .= ' VALUES (:name, :photo, :quantity, :price, :genre, :description, :productCategory)';
         $product = $this->connection->prepare($sql);
         $product->bindValue(':name', $data['name'], PDO::PARAM_STR);
-        $product->bindValue(':price', $data['price'], PDO::PARAM_STR);
-        //$product->bindValue(':photo', $data['photo'], PDO::PARAM_STR);
+        $product->bindValue(':photo', $data['photo'], PDO::PARAM_STR);
         $product->bindValue(':quantity', $data['quantity'], PDO::PARAM_INT);
+        $product->bindValue(':price', $data['price'], PDO::PARAM_INT);
         $product->bindValue(':genre', $data['genre'], PDO::PARAM_STR);
         $product->bindValue(':description', $data['description'], PDO::PARAM_STR);
         $product->bindValue(':productCategory', $data['productCategory'], PDO::PARAM_INT);
 
+        
         $product->execute();
+
         return $this->connection->lastInsertId();
 
     }
@@ -67,7 +69,7 @@ require('core/Database.php');
     }
     public function delete($cod) {
 
-        $sql = 'DELETE * FROM products WHERE cod = :cod';
+        $sql = 'DELETE  FROM products WHERE cod = :cod';
         $product = $this->connection->prepare($sql);
         $product->bindValue(':cod', $cod, PDO :: PARAM_INT);
         return $product->execute();
@@ -81,6 +83,19 @@ require('core/Database.php');
 
 
     }
+
+    public function findOne($cod) {
+
+        $sql = 'SELECT * FROM products WHERE cod=:cod ';
+
+        $products = $this->connection->prepare($sql);
+
+        $products->bindValue(':cod',$cod, PDO::PARAM_INT);
+
+        $products->execute();
+
+        return $products->fetch(PDO::FETCH_OBJ);
+   }
     public function searchName($name){
 
         $sql = 'SELECT * from products';
